@@ -33,13 +33,13 @@ func (h *Hub) Run() {
 
 		case client := <-h.Register:
 			h.Clients[client] = true
-      log.Println("Client registered")
+			log.Println("Client registered")
 
 		case client := <-h.Unregister:
 			if _, ok := h.Clients[client]; ok {
 				delete(h.Clients, client)
 				close(client.Send)
-        log.Println("Client unregistered")
+				log.Println("Client unregistered")
 			}
 		}
 	}
