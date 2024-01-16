@@ -48,7 +48,7 @@ This project is a backend implementation in Go for a real-time chat system using
 4. Run the server:
 
     ```bash
-    go run main.go
+    go run cmd/chat/main.go
     ```
 
 ## Configuration
