@@ -42,7 +42,7 @@ This project is a backend implementation in Go for a real-time chat system using
 3. Install dependencies:
 
     ```bash
-    go mod download
+    go mod tidy
     ```
 
 4. Run the server:
