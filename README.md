@@ -30,7 +30,7 @@ This project is a backend implementation in Go for a real-time chat system using
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/chat-backend-go
+    git clone https://github.com/joaovds/gotterChat-backend
     ```
 
 2. Navigate to the project directory:
