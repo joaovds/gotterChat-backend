@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-This project is a backend implementation in Go for a real-time chat system using Socket.IO. The primary goal is to create a scalable and efficient server that facilitates communication between multiple clients in real-time.
+This project is a backend implementation in Go for a real-time chat system using WebSocket. The primary goal is to create a scalable and efficient server that facilitates communication between multiple clients in real-time.
 
 ### Features
 
