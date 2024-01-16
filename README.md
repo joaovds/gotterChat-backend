@@ -36,7 +36,7 @@ This project is a backend implementation in Go for a real-time chat system using
 2. Navigate to the project directory:
 
     ```bash
-    cd chat
+    cd gotterChat-backend
     ```
 
 3. Install dependencies:
