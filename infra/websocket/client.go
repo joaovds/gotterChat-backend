@@ -1,8 +1,10 @@
 package websocket
 
 import (
-	gws "github.com/gorilla/websocket"
 	"log"
+	"time"
+
+	gws "github.com/gorilla/websocket"
 )
 
 type Client struct {
@@ -21,13 +23,20 @@ func NewClient(hub *Hub, conn *gws.Conn) *Client {
 
 const (
 	maxMessageSize = 512
+	writeWait      = 10 * time.Second
+	pongWait       = 60 * time.Second
+	pingPeriod     = (pongWait * 9) / 10
 )
 
-func (c *Client) ReadPump() {
+func (c *Client) MessageListener() {
 	defer func() {
 		c.Hub.Unregister <- c
 		c.Conn.Close()
 	}()
+
+	c.Conn.SetReadLimit(maxMessageSize)
+	c.Conn.SetReadDeadline(time.Now().Add(pongWait))
+	c.Conn.SetPongHandler(func(string) error { c.Conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 
 	for {
 		_, message, err := c.Conn.ReadMessage()
@@ -38,5 +47,41 @@ func (c *Client) ReadPump() {
 			break
 		}
 		c.Hub.Broadcast <- message
+	}
+}
+
+func (c *Client) WriteMessage() {
+	ticker := time.NewTicker(pingPeriod)
+
+	defer func() {
+		ticker.Stop()
+		c.Conn.Close()
+	}()
+
+	for {
+		select {
+		case message, ok := <-c.Send:
+			c.Conn.SetWriteDeadline(time.Now().Add(writeWait))
+			if !ok {
+				c.Conn.WriteMessage(gws.CloseMessage, []byte{})
+				return
+			}
+
+			w, err := c.Conn.NextWriter(gws.TextMessage)
+			if err != nil {
+				return
+			}
+			w.Write(message)
+
+			if err := w.Close(); err != nil {
+				return
+			}
+
+		case <-ticker.C:
+			c.Conn.SetWriteDeadline(time.Now().Add(writeWait))
+			if err := c.Conn.WriteMessage(gws.PingMessage, nil); err != nil {
+				return
+			}
+		}
 	}
 }

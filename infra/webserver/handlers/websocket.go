@@ -22,11 +22,11 @@ func NewWebsocketHandler() *websocketHandler {
 }
 
 var upgrader = gws.Upgrader{
-  ReadBufferSize:  1024,
-  WriteBufferSize: 1024,
-  CheckOrigin: func(r *http.Request) bool {
-    return true
-  },
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
 }
 
 func (h *websocketHandler) ServeWs(w http.ResponseWriter, r *http.Request) {
@@ -39,5 +39,6 @@ func (h *websocketHandler) ServeWs(w http.ResponseWriter, r *http.Request) {
 	client := websocket.NewClient(h.hub, conn)
 	client.Hub.Register <- client
 
-  go client.ReadPump()
+	go client.MessageListener()
+	go client.WriteMessage()
 }
