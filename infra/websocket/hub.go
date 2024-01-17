@@ -15,7 +15,7 @@ type Hub struct {
 }
 
 func NewHub(id string) *Hub {
-	if id != "" {
+	if id == "" {
 		id = uuid.New().String()
 	}
 
@@ -28,7 +28,7 @@ func NewHub(id string) *Hub {
 	}
 }
 
-func (h *Hub) Run() {
+func (h *Hub) Run(hubs map[string]*Hub) {
 	for {
 		select {
 		case message := <-h.Broadcast:
@@ -51,6 +51,10 @@ func (h *Hub) Run() {
 				close(client.Send)
 				log.Println("Client unregistered")
 			}
-		}
+
+      if len(h.Clients) == 0 {
+        delete(hubs, client.Hub.ID)
+      }
+    }
 	}
 }

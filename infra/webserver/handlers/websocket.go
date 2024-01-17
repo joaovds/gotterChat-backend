@@ -36,18 +36,10 @@ func (h *websocketHandler) ServeWs(roomId string, w http.ResponseWriter, r *http
 	if hub, ok := Hubs[roomId]; !ok {
 		h.hub = websocket.NewHub(roomId)
 		Hubs[roomId] = h.hub
-		go h.hub.Run()
-
-		log.Println("New hub created")
+		go h.hub.Run(Hubs)
 	} else {
 		h.hub = hub
-	}
-
-	log.Println("Hub ID: " + h.hub.ID)
-	log.Printf("Total hubs: %d", len(Hubs))
-	for id, hub := range Hubs {
-		log.Printf("Hub ID: %s, Clients: %d", id, len(hub.Clients))
-	}
+	}	
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
