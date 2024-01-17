@@ -12,8 +12,8 @@ func handleWebsocketRoutes(mux *chi.Mux) {
 
 	mux.Route("/ws", func(wsRouter chi.Router) {
 		wsRouter.Get("/{roomId}", func(w http.ResponseWriter, r *http.Request) {
-      roomId := chi.URLParam(r, "roomId")
-      println("Room ID: " + roomId)
+			roomId := chi.URLParam(r, "roomId")
+			println("Room ID: " + roomId)
 
 			websocketHandlers.ServeWs(roomId, w, r)
 		})

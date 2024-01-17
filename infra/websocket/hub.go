@@ -7,7 +7,7 @@ import (
 )
 
 type Hub struct {
-  ID         string
+	ID         string
 	Clients    map[*Client]bool
 	Broadcast  chan []byte
 	Register   chan *Client
@@ -15,12 +15,12 @@ type Hub struct {
 }
 
 func NewHub(id string) *Hub {
-  if id != "" {
-    id = uuid.New().String()
-  }
+	if id != "" {
+		id = uuid.New().String()
+	}
 
 	return &Hub{
-    ID: id,
+		ID:         id,
 		Clients:    make(map[*Client]bool),
 		Broadcast:  make(chan []byte),
 		Register:   make(chan *Client),

@@ -28,26 +28,26 @@ var upgrader = gws.Upgrader{
 var Hubs = make(map[string]*websocket.Hub)
 
 func (h *websocketHandler) ServeWs(roomId string, w http.ResponseWriter, r *http.Request) {
-  if !validation.IsValidUUID(roomId) {
-    http.Error(w, "Invalid room id", http.StatusBadRequest)
-    return
-  }
+	if !validation.IsValidUUID(roomId) {
+		http.Error(w, "Invalid room id", http.StatusBadRequest)
+		return
+	}
 
-  if hub, ok := Hubs[roomId]; !ok {
-    h.hub = websocket.NewHub(roomId)
-    Hubs[roomId] = h.hub
-    go h.hub.Run()
+	if hub, ok := Hubs[roomId]; !ok {
+		h.hub = websocket.NewHub(roomId)
+		Hubs[roomId] = h.hub
+		go h.hub.Run()
 
-    log.Println("New hub created") 
-  } else {
-    h.hub = hub
-  }
+		log.Println("New hub created")
+	} else {
+		h.hub = hub
+	}
 
-  log.Println("Hub ID: " + h.hub.ID)
-  log.Printf("Total hubs: %d", len(Hubs))
-  for id, hub := range Hubs {
-    log.Printf("Hub ID: %s, Clients: %d", id, len(hub.Clients))
-  }
+	log.Println("Hub ID: " + h.hub.ID)
+	log.Printf("Total hubs: %d", len(Hubs))
+	for id, hub := range Hubs {
+		log.Printf("Hub ID: %s, Clients: %d", id, len(hub.Clients))
+	}
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
