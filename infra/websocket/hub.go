@@ -1,16 +1,26 @@
 package websocket
 
-import "log"
+import (
+	"log"
+
+	"github.com/google/uuid"
+)
 
 type Hub struct {
+  ID         string
 	Clients    map[*Client]bool
 	Broadcast  chan []byte
 	Register   chan *Client
 	Unregister chan *Client
 }
 
-func NewHub() *Hub {
+func NewHub(id string) *Hub {
+  if id != "" {
+    id = uuid.New().String()
+  }
+
 	return &Hub{
+    ID: id,
 		Clients:    make(map[*Client]bool),
 		Broadcast:  make(chan []byte),
 		Register:   make(chan *Client),
