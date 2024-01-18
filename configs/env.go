@@ -8,7 +8,8 @@ import (
 )
 
 type Env struct {
-	Port string
+	Port       string
+	MongoDBUri string
 }
 
 var ENV *Env
@@ -19,8 +20,14 @@ func newEnv() *Env {
 		port = os.Getenv("PORT")
 	}
 
+	mongoDBURI := "mongodb://localhost:27017"
+	if os.Getenv("MONGODB_URI") != "" {
+		mongoDBURI = os.Getenv("MONGODB_URI")
+	}
+
 	return &Env{
-		Port: port,
+		Port:       port,
+		MongoDBUri: mongoDBURI,
 	}
 }
 
