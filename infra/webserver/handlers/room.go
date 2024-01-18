@@ -16,9 +16,14 @@ type HubJson struct {
 }
 
 func (rh *roomHandler) GetRooms(w http.ResponseWriter, r *http.Request) {
+  if len(Hubs) == 0 {
+    w.Write([]byte("[]"))
+    return
+  }
+
   var HubsJson []HubJson
-  for k, _ := range Hubs {
-    HubsJson = append(HubsJson, HubJson{Id: k})
+  for id := range Hubs {
+    HubsJson = append(HubsJson, HubJson{Id: id})
   }
 
   hubs, err := json.Marshal(HubsJson)
