@@ -23,43 +23,48 @@ This project is a backend implementation in Go for a real-time chat system using
 ### Prerequisites
 
 - [Go](https://golang.org/) installed on your machine.
-- [Socket.IO Go Library](https://github.com/googollee/go-socket.io) installed.
 
 ### Installation
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/joaovds/gotterChat-backend
-    ```
+   ```bash
+   git clone https://github.com/joaovds/gotterChat-backend
+   ```
 
 2. Navigate to the project directory:
 
-    ```bash
-    cd gotterChat-backend
-    ```
+   ```bash
+   cd gotterChat-backend
+   ```
 
-3. Install dependencies:
+3. Copy enviroments variables:
 
-    ```bash
-    go mod tidy
-    ```
+   ```bash
+   cp .env.example .env
+   ```
 
-4. Run the server:
+4. Install dependencies:
 
-    ```bash
-    go run cmd/chat/main.go
-    ```
+   ```bash
+   go mod tidy
+   ```
+
+5. Run the server:
+
+   ```bash
+   go run cmd/chat/main.go
+   ```
 
 ## Configuration
 
-- Modify the `config.toml` file to customize the server settings, such as port, database connection details, and authentication configurations.
+- Modify the `.env` file to customize the server settings, such as port, database connection details, and authentication configurations.
 
 ## Usage
 
-1. Connect to the Socket.IO server using the appropriate client library.
+1. Connect to the WebSocket server using the appropriate client library.
 2. Implement user authentication based on the server's authentication mechanism.
-3. Establish a Socket.IO connection and start sending and receiving messages in real-time.
+3. Establish a WebSocket connection and start sending and receiving messages in real-time.
 
 ## Contributing
 
