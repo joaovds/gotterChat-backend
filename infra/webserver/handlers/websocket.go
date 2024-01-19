@@ -39,7 +39,7 @@ func (h *websocketHandler) ServeWs(roomId string, w http.ResponseWriter, r *http
 		go h.hub.Run(Hubs)
 	} else {
 		h.hub = hub
-	}	
+	}
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
