@@ -16,7 +16,7 @@ We hope that these policies are followed both in spirit and in letter
 
 ### **Reporting Issues**
 
-If you witness or experience any behavior mentioned above in the [Policy anti-harassment](#policy-anti-harassment), please contact our team via email: Gotter Chat@gmail.com. All submitted reports will be analyzed. In your report include:
+If you witness or experience any behavior mentioned above in the [Policy anti-harassment](#policy-anti-harassment), please contact our team via email: hmartins.dev@gmail.com. All submitted reports will be analyzed. In your report include:
 
 - Contact information
 - Names of any individuals who are involved. If there are any witnesses, include them as well. His account of what he witnessed. If there are still records, include a link;
