@@ -1,8 +1,6 @@
 package websocket
 
 import (
-	"log"
-
 	"github.com/google/uuid"
 )
 
@@ -43,13 +41,11 @@ func (h *Hub) Run(hubs map[string]*Hub) {
 
 		case client := <-h.Register:
 			h.Clients[client] = true
-			log.Println("Client registered")
 
 		case client := <-h.Unregister:
 			if _, ok := h.Clients[client]; ok {
 				delete(h.Clients, client)
 				close(client.Send)
-				log.Println("Client unregistered")
 			}
 
       if len(h.Clients) == 0 {

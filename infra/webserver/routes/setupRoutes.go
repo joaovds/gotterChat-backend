@@ -13,6 +13,7 @@ func SetupRoutes(mainMux *chi.Mux, userRepo *repository.UserRepository) {
 	apiV1 := chi.NewRouter()
 
 	handleWebsocketRoutes(apiV1)
+	handleRoomRoutes(apiV1)
 	configureUserRoutes(apiV1, userRepo)
 
 	mainMux.Mount("/api/v1", apiV1)
