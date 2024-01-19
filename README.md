@@ -11,7 +11,7 @@ This project is a backend implementation in Go for a real-time chat system using
 
 ### Features
 
-- **Real-time Communication**: Utilizing Socket.IO for bidirectional communication between the server and clients, enabling instant message updates.
+- **Real-time Communication**: Utilizing WebSocket for bidirectional communication between the server and clients, enabling instant message updates.
 - **Scalability**: Designed to handle a large number of concurrent connections efficiently, ensuring smooth communication even with a high volume of users.
 - **User Authentication**: Implement a secure authentication mechanism to validate users and manage access to chat features.
 - **Message Persistence**: Optionally, store chat messages in a database to provide message history and continuity across user sessions.
