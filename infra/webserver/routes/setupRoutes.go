@@ -14,12 +14,12 @@ func SetupRoutes(mainMux *chi.Mux, userRepo *repository.UserRepository) {
 
 	handleWebsocketRoutes(apiV1)
 	handleRoomRoutes(apiV1)
-	configureUserRoutes(apiV1, userRepo)
+	handleUserRoutes(apiV1, userRepo)
 
 	mainMux.Mount("/api/v1", apiV1)
 }
 
-func configureUserRoutes(mux *chi.Mux, userRepo *repository.UserRepository) {
+func handleUserRoutes(mux *chi.Mux, userRepo *repository.UserRepository) {
 
 	mux.Post("/createUser", func(writer http.ResponseWriter, request *http.Request) {
 		var newUser domain.User
