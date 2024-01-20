@@ -8,8 +8,9 @@ import (
 )
 
 type Env struct {
-	Port       string
-	MongoDBUri string
+	Port        string
+	MongoDbUri  string
+	MongoDbName string
 }
 
 var ENV *Env
@@ -20,14 +21,20 @@ func newEnv() *Env {
 		port = os.Getenv("PORT")
 	}
 
-	mongoDBURI := "mongodb://localhost:27017"
+	mongoDbURI := "mongodb://localhost:27017"
 	if os.Getenv("MONGODB_URI") != "" {
-		mongoDBURI = os.Getenv("MONGODB_URI")
+		mongoDbURI = os.Getenv("MONGODB_URI")
+	}
+
+	mongoDbName := ""
+	if os.Getenv("MONGO_DB_NAME") != "" {
+		mongoDbName = os.Getenv("MONGO_DB_NAME")
 	}
 
 	return &Env{
-		Port:       port,
-		MongoDBUri: mongoDBURI,
+		Port:        port,
+		MongoDbUri:  mongoDbURI,
+		MongoDbName: mongoDbName,
 	}
 }
 
