@@ -9,8 +9,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joaovds/chat/application/repository"
 	"github.com/joaovds/chat/configs"
-	"github.com/joaovds/chat/infra/database"
-	"github.com/joaovds/chat/infra/webserver/routes"
+	"github.com/joaovds/chat/internal/infra/database"
+	"github.com/joaovds/chat/internal/infra/webserver/routes"
 )
 
 func main() {
