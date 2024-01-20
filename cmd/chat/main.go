@@ -9,26 +9,22 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joaovds/chat/application/repository"
 	"github.com/joaovds/chat/configs"
+	"github.com/joaovds/chat/infra/database"
 	"github.com/joaovds/chat/infra/webserver/routes"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func main() {
 	configs.LoadEnv()
 
-	//db connection
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(configs.ENV.MongoDBUri))
-	if err != nil {
-		fmt.Println("Error connecting to MongoDB: ", err)
+	mongoConfig := database.MongoDBConfig{
+		URI:      configs.ENV.MongoDbUri,
+		Database: configs.ENV.MongoDbName,
 	}
-	defer client.Disconnect(context.TODO())
 
-	fmt.Println("MongoDB succesfully connected.")
-	db := client.Database("gotter-chat")
+	mongoInstance := database.SetupMongoDB(mongoConfig)
+	defer mongoInstance.Client.Disconnect(context.TODO())
 
-	//repositories
-	userRepository := repository.NewUserRepository(db)
+	userRepository := repository.NewUserRepository(mongoInstance.Db)
 
 	router := chi.NewRouter()
 
