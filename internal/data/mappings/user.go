@@ -7,9 +7,14 @@ import (
 	"github.com/joaovds/chat/internal/domain/user"
 )
 
+const (
+  ErrUserIsNil = "user is nil"
+  ErrCreateUserInputDTOIsNil = "create user input dto is nil"
+)
+
 func MapCreateUserInputDTOToUser(createUserInputDTO *dtos.CreateUserInputDTO) (*user_domain.User, error) {
   if createUserInputDTO == nil {
-    return nil, errors.New("create user input dto is nil")
+    return nil, errors.New(ErrCreateUserInputDTOIsNil)
   }
 
   return &user_domain.User{
@@ -21,7 +26,7 @@ func MapCreateUserInputDTOToUser(createUserInputDTO *dtos.CreateUserInputDTO) (*
 
 func MapUserToCreateUserInputDTO(user *user_domain.User) (*dtos.CreateUserInputDTO, error) {
   if user == nil {
-    return nil, errors.New("user is nil")
+    return nil, errors.New(ErrUserIsNil)
   }
 
   return &dtos.CreateUserInputDTO{
