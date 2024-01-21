@@ -20,8 +20,10 @@ type MongoDBConnection struct {
 	Db     *mongo.Database
 }
 
-var mongoOnce sync.Once
-var mongoInstance *MongoDBConnection
+var (
+  mongoOnce sync.Once
+  mongoInstance *MongoDBConnection
+)
 
 func SetupMongoDB(config MongoDBConfig) *MongoDBConnection {
 	mongoOnce.Do(func() {

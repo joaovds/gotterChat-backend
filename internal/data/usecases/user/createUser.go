@@ -15,7 +15,10 @@ func NewCreateUserUseCase(createUserRepository repositories_data.CreateUserRepos
 }
 
 func (createUserUseCase *CreateUserUseCase) Execute(user *user_domain.User) error {
-  mappedUser := mappings.MapUserToCreateUserInputDTO(user)
+  mappedUser, err := mappings.MapUserToCreateUserInputDTO(user)
+  if err != nil {
+    return err
+  }
 
   return createUserUseCase.createUserRepository.Create(mappedUser)
 }
