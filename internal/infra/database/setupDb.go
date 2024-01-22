@@ -20,8 +20,10 @@ type MongoDBConnection struct {
 	Db     *mongo.Database
 }
 
-var mongoOnce sync.Once
-var mongoInstance *MongoDBConnection
+var (
+  mongoOnce sync.Once
+  MongoInstance *MongoDBConnection
+)
 
 func SetupMongoDB(config MongoDBConfig) *MongoDBConnection {
 	mongoOnce.Do(func() {
@@ -30,7 +32,7 @@ func SetupMongoDB(config MongoDBConfig) *MongoDBConnection {
 			log.Fatal("Error connecting to MongoDB: ", err)
 		}
 
-		mongoInstance = &MongoDBConnection{
+		MongoInstance = &MongoDBConnection{
 			Client: client,
 			Db:     client.Database(config.Database),
 		}
@@ -38,5 +40,5 @@ func SetupMongoDB(config MongoDBConfig) *MongoDBConnection {
 		fmt.Println("MongoDB successfully connected.")
 	})
 
-	return mongoInstance
+	return MongoInstance
 }

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/joaovds/chat/infra/webserver/handlers"
+	"github.com/joaovds/chat/internal/infra/webserver/handlers"
 )
 
 func handleRoomRoutes(mux *chi.Mux) {
