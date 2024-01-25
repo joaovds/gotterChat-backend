@@ -8,19 +8,31 @@ import (
 	gws "github.com/gorilla/websocket"
 )
 
-type Message struct {
-	ID     string `json:"id"`
-	RoomID string `json:"room_id"`
-	UserID string `json:"user_id"`
-	Data   string `json:"data"`
+type MessageData struct {
+	Datetime time.Time `json:"datetime"`
+	Message  string    `json:"message"`
 }
 
-func NewMessage(roomId, userId string, data string) Message {
+func NewMessageData(message string) MessageData {
+	return MessageData{
+		Datetime: time.Now(),
+		Message:  message,
+	}
+}
+
+type Message struct {
+	ID      string      `json:"id"`
+	RoomID  string      `json:"roomId"`
+	UserID  string      `json:"userId"`
+	Content MessageData `json:"content"`
+}
+
+func NewMessage(roomId, userId string, content MessageData) Message {
 	return Message{
-		ID:     uuid.New().String(),
-		RoomID: roomId,
-		UserID: userId,
-		Data:   data,
+		ID:      uuid.New().String(),
+		RoomID:  roomId,
+		UserID:  userId,
+		Content: content,
 	}
 }
 
@@ -58,7 +70,7 @@ func (c *Client) MessageListener() {
 	c.Conn.SetPongHandler(func(string) error { c.Conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 
 	for {
-		_, messageData, err := c.Conn.ReadMessage()
+		_, readMessage, err := c.Conn.ReadMessage()
 		if err != nil {
 			if gws.IsUnexpectedCloseError(err, gws.CloseGoingAway, gws.CloseAbnormalClosure) {
 				log.Printf("error: %v", err)
@@ -66,7 +78,8 @@ func (c *Client) MessageListener() {
 			break
 		}
 
-		message := NewMessage(c.Hub.ID, c.ID, string(messageData))
+		messageData := NewMessageData(string(readMessage))
+		message := NewMessage(c.Hub.ID, c.ID, messageData)
 
 		c.Hub.Broadcast <- message
 	}
