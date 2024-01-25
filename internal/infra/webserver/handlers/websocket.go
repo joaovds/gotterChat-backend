@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	gws "github.com/gorilla/websocket"
-	"github.com/joaovds/chat/infra/websocket"
+	"github.com/joaovds/chat/internal/infra/websocket"
 	"github.com/joaovds/chat/pkg/validation"
 )
 
@@ -39,7 +39,7 @@ func (h *websocketHandler) ServeWs(roomId string, w http.ResponseWriter, r *http
 		go h.hub.Run(Hubs)
 	} else {
 		h.hub = hub
-	}	
+	}
 
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {

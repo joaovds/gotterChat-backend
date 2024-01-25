@@ -48,9 +48,9 @@ func (h *Hub) Run(hubs map[string]*Hub) {
 				close(client.Send)
 			}
 
-      if len(h.Clients) == 0 {
-        delete(hubs, client.Hub.ID)
-      }
-    }
+			if len(h.Clients) == 0 {
+				delete(hubs, client.Hub.ID)
+			}
+		}
 	}
 }

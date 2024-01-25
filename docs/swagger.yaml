@@ -1,0 +1,39 @@
+basePath: /api/v1
+definitions:
+  handlers.HubJson:
+    properties:
+      id:
+        type: string
+    type: object
+host: localhost:3333
+info:
+  contact: {}
+  description: 'Chat Realtime with WebSocket, Golang and MongoDb (Front-end: Flutter)'
+  license:
+    name: MIT
+    url: https://github.com/joaovds/gotterChat-backend/blob/main/LICENSE
+  title: Gotter Chat
+  version: "1.0"
+paths:
+  /rooms:
+    get:
+      consumes:
+      - application/json
+      description: Get All Rooms
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handlers.HubJson'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get All Rooms
+      tags:
+      - rooms
+swagger: "2.0"
