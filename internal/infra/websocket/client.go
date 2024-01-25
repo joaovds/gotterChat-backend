@@ -89,12 +89,12 @@ func (c *Client) WriteMessage() {
 				return
 			}
 
-      if(message.UserID != c.ID) {
-			err := c.Conn.WriteJSON(message)
-			if err != nil {
-				log.Println(err)
+			if message.UserID != c.ID {
+				err := c.Conn.WriteJSON(message)
+				if err != nil {
+					log.Println(err)
+				}
 			}
-      }
 
 		case <-ticker.C:
 			c.Conn.SetWriteDeadline(time.Now().Add(writeWait))
