@@ -8,16 +8,16 @@ import (
 )
 
 const (
-  ErrInvalidUser = "Invalid user"
+	ErrInvalidUser = "Invalid user"
 )
 
 func MapCreateUserRequestDTOToUser(createUserRequestDTO *webserver_dtos.CreateUserRequestDTO) (*user_domain.User, error) {
-  if createUserRequestDTO == nil {
-    return nil, errors.New(ErrInvalidUser)
-  }
+	if createUserRequestDTO == nil {
+		return nil, errors.New(ErrInvalidUser)
+	}
 
-  return &user_domain.User{
-    Nickname: createUserRequestDTO.Nickname,
-    Password: createUserRequestDTO.Password,
-  }, nil
+	return &user_domain.User{
+		Nickname: createUserRequestDTO.Nickname,
+		Password: createUserRequestDTO.Password,
+	}, nil
 }
