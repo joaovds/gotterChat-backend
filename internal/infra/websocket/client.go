@@ -4,20 +4,39 @@ import (
 	"log"
 	"time"
 
+	"github.com/google/uuid"
 	gws "github.com/gorilla/websocket"
 )
 
+type Message struct {
+	ID     string `json:"id"`
+	RoomID string `json:"room_id"`
+	UserID string `json:"user_id"`
+	Data   string `json:"data"`
+}
+
+func NewMessage(roomId, userId string, data string) Message {
+	return Message{
+		ID:     uuid.New().String(),
+		RoomID: roomId,
+		UserID: userId,
+		Data:   data,
+	}
+}
+
 type Client struct {
+	ID   string
 	Hub  *Hub
 	Conn *gws.Conn
-	Send chan []byte
+	Send chan Message
 }
 
 func NewClient(hub *Hub, conn *gws.Conn) *Client {
 	return &Client{
+		ID:   uuid.New().String(),
 		Hub:  hub,
 		Conn: conn,
-		Send: make(chan []byte, 256),
+		Send: make(chan Message),
 	}
 }
 
@@ -39,13 +58,16 @@ func (c *Client) MessageListener() {
 	c.Conn.SetPongHandler(func(string) error { c.Conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 
 	for {
-		_, message, err := c.Conn.ReadMessage()
+		_, messageData, err := c.Conn.ReadMessage()
 		if err != nil {
 			if gws.IsUnexpectedCloseError(err, gws.CloseGoingAway, gws.CloseAbnormalClosure) {
 				log.Printf("error: %v", err)
 			}
 			break
 		}
+
+		message := NewMessage(c.Hub.ID, c.ID, string(messageData))
+
 		c.Hub.Broadcast <- message
 	}
 }
@@ -67,15 +89,12 @@ func (c *Client) WriteMessage() {
 				return
 			}
 
-			w, err := c.Conn.NextWriter(gws.TextMessage)
+      if(message.UserID != c.ID) {
+			err := c.Conn.WriteJSON(message)
 			if err != nil {
-				return
+				log.Println(err)
 			}
-			w.Write(message)
-
-			if err := w.Close(); err != nil {
-				return
-			}
+      }
 
 		case <-ticker.C:
 			c.Conn.SetWriteDeadline(time.Now().Add(writeWait))
