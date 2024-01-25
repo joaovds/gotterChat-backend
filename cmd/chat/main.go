@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,7 +9,8 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joaovds/chat/configs"
 	_ "github.com/joaovds/chat/docs"
-	"github.com/joaovds/chat/infra/webserver/routes"
+	"github.com/joaovds/chat/internal/infra/database"
+	"github.com/joaovds/chat/internal/infra/webserver/routes"
 )
 
 // @title Gotter Chat
@@ -22,6 +24,14 @@ import (
 // @BasePath /api/v1
 func main() {
 	configs.LoadEnv()
+
+	mongoConfig := database.MongoDBConfig{
+		URI:      configs.ENV.MongoDbUri,
+		Database: configs.ENV.MongoDbName,
+	}
+
+	mongoInstance := database.SetupMongoDB(mongoConfig)
+	defer mongoInstance.Client.Disconnect(context.TODO())
 
 	router := chi.NewRouter()
 

@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	gws "github.com/gorilla/websocket"
-	"github.com/joaovds/chat/infra/websocket"
+	"github.com/joaovds/chat/internal/infra/websocket"
 	"github.com/joaovds/chat/pkg/validation"
 )
 
