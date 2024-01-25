@@ -1,5 +1,5 @@
 package user_domain
 
 type CreateUserUseCase interface {
-  execute(user *User) error
+	execute(user *User) error
 }

@@ -21,8 +21,8 @@ type MongoDBConnection struct {
 }
 
 var (
-  mongoOnce sync.Once
-  MongoInstance *MongoDBConnection
+	mongoOnce     sync.Once
+	MongoInstance *MongoDBConnection
 )
 
 func SetupMongoDB(config MongoDBConfig) *MongoDBConnection {

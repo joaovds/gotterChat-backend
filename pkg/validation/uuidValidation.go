@@ -7,14 +7,14 @@ import (
 )
 
 func IsValidUUID(id string) bool {
-  _, err := uuid.Parse(id)
-  return err == nil
+	_, err := uuid.Parse(id)
+	return err == nil
 }
 
 const (
-  InvalidUUIDErrorMessage       = "is not a valid uuid"
+	InvalidUUIDErrorMessage = "is not a valid uuid"
 )
 
 func CreateInvalidError(attribute string) error {
-  return errors.New(attribute + " " + InvalidUUIDErrorMessage)
+	return errors.New(attribute + " " + InvalidUUIDErrorMessage)
 }
