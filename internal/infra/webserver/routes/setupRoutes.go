@@ -9,6 +9,7 @@ func SetupRoutes(mainMux *chi.Mux) {
 
 	handleWebsocketRoutes(apiV1)
 	handleRoomRoutes(apiV1)
+	handleDocsRoutes(apiV1)
 	handleUserRoutes(apiV1)
 
 	mainMux.Mount("/api/v1", apiV1)

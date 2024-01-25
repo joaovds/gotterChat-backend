@@ -1,0 +1,59 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Chat Realtime with WebSocket, Golang and MongoDb (Front-end: Flutter)",
+        "title": "Gotter Chat",
+        "contact": {},
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/joaovds/gotterChat-backend/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3333",
+    "basePath": "/api/v1",
+    "paths": {
+        "/rooms": {
+            "get": {
+                "description": "Get All Rooms",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rooms"
+                ],
+                "summary": "Get All Rooms",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/handlers.HubJson"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.HubJson": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
