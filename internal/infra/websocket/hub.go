@@ -7,7 +7,7 @@ import (
 type Hub struct {
 	ID         string
 	Clients    map[*Client]bool
-	Broadcast  chan []byte
+	Broadcast  chan Message
 	Register   chan *Client
 	Unregister chan *Client
 }
@@ -20,7 +20,7 @@ func NewHub(id string) *Hub {
 	return &Hub{
 		ID:         id,
 		Clients:    make(map[*Client]bool),
-		Broadcast:  make(chan []byte),
+		Broadcast:  make(chan Message),
 		Register:   make(chan *Client),
 		Unregister: make(chan *Client),
 	}
