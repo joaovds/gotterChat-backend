@@ -10,30 +10,30 @@ import (
 )
 
 func TestNewCreateUserUseCase(t *testing.T) {
-  t.Run("Should return a CreateUserUseCase", func(t *testing.T) {
-    createUserUseCase := NewCreateUserUseCase(&CreateUserRepositoryMock{})
+	t.Run("Should return a CreateUserUseCase", func(t *testing.T) {
+		createUserUseCase := NewCreateUserUseCase(&CreateUserRepositoryMock{})
 
-    assert.NotNil(t, createUserUseCase)
-    assert.IsType(t, &CreateUserUseCase{}, createUserUseCase)
-  })
+		assert.NotNil(t, createUserUseCase)
+		assert.IsType(t, &CreateUserUseCase{}, createUserUseCase)
+	})
 }
 
 func TestCreateUserUseCase_Execute(t *testing.T) {
-  t.Run("Should return an error when mapping user to CreateUserInputDTO", func(t *testing.T) {
-    createUserUseCase := NewCreateUserUseCase(&CreateUserRepositoryMock{})
-    err := createUserUseCase.Execute(nil)
+	t.Run("Should return an error when mapping user to CreateUserInputDTO", func(t *testing.T) {
+		createUserUseCase := NewCreateUserUseCase(&CreateUserRepositoryMock{})
+		err := createUserUseCase.Execute(nil)
 
-    assert.NotNil(t, err)
-    assert.Equal(t, mappings.ErrUserIsNil, err.Error())
-  })
-  
+		assert.NotNil(t, err)
+		assert.Equal(t, mappings.ErrUserIsNil, err.Error())
+	})
+
 }
 
 type CreateUserRepositoryMock struct {
-  mock.Mock
+	mock.Mock
 }
 
 func (mock *CreateUserRepositoryMock) Create(user *dtos.CreateUserInputDTO) error {
-  args := mock.Called(user)
-  return args.Error(0)
+	args := mock.Called(user)
+	return args.Error(0)
 }
