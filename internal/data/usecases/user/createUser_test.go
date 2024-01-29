@@ -20,14 +20,14 @@ func TestNewCreateUserUseCase(t *testing.T) {
 
 func TestCreateUserUseCase_Execute(t *testing.T) {
 	t.Run("Should return an error when mapping user to CreateUserInputDTO", func(t *testing.T) {
-    createUserRepositoryMock := &CreateUserRepositoryMock{}
+		createUserRepositoryMock := &CreateUserRepositoryMock{}
 		createUserUseCase := NewCreateUserUseCase(createUserRepositoryMock)
 
 		err := createUserUseCase.Execute(nil)
 
 		assert.NotNil(t, err)
 		assert.Equal(t, mappings.ErrUserIsNil, err.Error())
-    createUserRepositoryMock.AssertNumberOfCalls(t, "Create", 0)
+		createUserRepositoryMock.AssertNumberOfCalls(t, "Create", 0)
 	})
 }
 

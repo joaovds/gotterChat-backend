@@ -32,9 +32,9 @@ func (u *User) CreateInvalidError(attribute string) error {
 }
 
 func (u *User) Validate() error {
-  if u == nil {
-    return errors.New("user is nil")
-  }
+	if u == nil {
+		return errors.New("user is nil")
+	}
 
 	if u.Id == "" {
 		return u.CreateInvalidError("id")
