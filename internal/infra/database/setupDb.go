@@ -37,6 +37,11 @@ func SetupMongoDB(config MongoDBConfig) *MongoDBConnection {
 			Db:     client.Database(config.Database),
 		}
 
+		err = MongoInstance.Client.Ping(context.TODO(), options.Client().ReadPreference)
+		if err != nil {
+			log.Fatal("Ping fail! Can't connect to MongoDB. Check your credentials and system status.")
+		}
+
 		fmt.Println("MongoDB successfully connected.")
 	})
 
